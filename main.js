@@ -63,7 +63,7 @@ camera.lookAt(0, 0, 0);
 
 
 const hdrLoader = new HDRLoader(); 
-const envMap = await hdrLoader.loadAsync('/Rendu-workshop-3js/public/textures/galaxie.hdr');
+const envMap = await hdrLoader.loadAsync('./textures/galaxie.hdr');
 envMap.mapping = THREE.EquirectangularReflectionMapping;
 
 scene.environment = envMap;
