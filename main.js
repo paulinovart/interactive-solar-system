@@ -22,6 +22,21 @@ let dureeRotationDiv = document.querySelector(".duree-rotation-div");
 let temperatureDiv = document.querySelector(".temperature-div");
 let nombreLunesDiv = document.querySelector(".nombre-lunes-div");
 
+let loadingScreen = document.querySelector(".loading-screen");
+// window.addEventListener('load', function() {
+//   console.log("loaded")
+//   loadingScreen.style.display = 'none';
+// })
+
+const manager = new THREE.LoadingManager();
+
+
+manager.onLoad = () => {
+  loadingScreen.style.display = "none";
+};
+
+// const gltfLoader = new GLTFLoader(manager);
+// const textureLoader = new THREE.TextureLoader(manager);
 
 nomDiv.innerHTML ="nom de la planete"
 
@@ -62,7 +77,7 @@ camera.lookAt(0, 0, 0);
 
 
 
-const hdrLoader = new HDRLoader(); 
+const hdrLoader = new HDRLoader(manager); 
 const envMap = await hdrLoader.loadAsync('./public/textures/galaxie.hdr');
 envMap.mapping = THREE.EquirectangularReflectionMapping;
 
@@ -458,7 +473,7 @@ ORBITES TRY FOR EACH
     },
   ];
 
-  const circleTexture = new THREE.TextureLoader().load("./public/textures/circle.png");
+  const circleTexture = new THREE.TextureLoader(manager).load("./public/textures/circle.png");
   const circleMaterial = new THREE.SpriteMaterial({
     map: circleTexture,
     transparent: true,
@@ -466,7 +481,7 @@ ORBITES TRY FOR EACH
 
 //ajout du soleil
 
-const sunTexture = new THREE.TextureLoader().load("./public/textures/sunmap.jpg")
+const sunTexture = new THREE.TextureLoader(manager).load("./public/textures/sunmap.jpg")
 const sunGeometry = new THREE.SphereGeometry(0.0139 , 32, 16);
 const sunMaterial = new THREE.MeshPhysicalMaterial({
   color: "yellow",
@@ -514,7 +529,7 @@ scene.add(sun);
 
     //création des planetes
 
-    const texloader = new THREE.TextureLoader();
+    const texloader = new THREE.TextureLoader(manager);
     const planetTexture = texloader.load(orbit.baseColor);
     const planetTextureRoughness = texloader.load(orbit.roughness);
     const planetTextureNormalMap = texloader.load(orbit.normalMapImage);
